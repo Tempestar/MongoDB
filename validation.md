@@ -6,6 +6,25 @@ nom sera obligatoire et devra être de type chaîne de caractères.
 capacite sera obligatoire et devra être de type entier (int).
 
 Dans le champ adresse, les champs codePostal et ville, tous deux de type chaîne de caractères, seront obligatoires.
+```
+db.salles.createIndex(
+   {
+      "nom": 1,
+      "capacite": 1,
+      "adresse.codePostal": 1,
+      "adresse.ville": 1
+   },
+   {
+      "unique": true,
+      "partialFilterExpression": {
+         "nom": { "$type": "string" },
+         "capacite": { "$type": "int" },
+         "adresse.codePostal": { "$type": "string" },
+         "adresse.ville": { "$type": "string" }
+      }
+   }
+)
+```
 
 Que constatez-vous lors de la tentative d’insertion suivante, et quelle en est la cause ?
 
@@ -28,6 +47,27 @@ db.salles.insertOne(
 Exercice 2
 
 Rajoutez à vos critères de validation existants un critère supplémentaire : le champ _id devra dorénavant être de type entier (int) ou ObjectId.
+```
+db.salles.createIndex(
+   {
+      "nom": 1,
+      "capacite": 1,
+      "adresse.codePostal": 1,
+      "adresse.ville": 1,
+      "_id": 1
+   },
+   {
+      "unique": true,
+      "partialFilterExpression": {
+         "nom": { "$type": "string" },
+         "capacite": { "$type": "int" },
+         "adresse.codePostal": { "$type": "string" },
+         "adresse.ville": { "$type": "string" },
+         "_id": { "$type": "int"}
+      }
+   }
+)
+```
 
 Que se passe-t-il si vous tentez de mettre à jour l’ensemble des documents existants dans la collection à l’aide de la requête suivante :
 
